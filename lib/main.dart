@@ -20,7 +20,7 @@ void main() async {
   await SharedPrefController.instance.initPref();
   runApp(const BawabetDamascusApp());
 }
-//
+//test2
 class BawabetDamascusApp extends StatelessWidget {
   const BawabetDamascusApp({super.key});
 
