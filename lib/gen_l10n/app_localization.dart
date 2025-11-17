@@ -106,173 +106,89 @@ abstract class AppLocalizations {
   /// **'Welcome'**
   String get welcome;
 
-  /// No description provided for @signInToContinue.
+  /// No description provided for @title.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to Continue'**
-  String get signInToContinue;
+  /// **'Bawabet Damascus'**
+  String get title;
 
-  /// No description provided for @email.
+  /// No description provided for @restaurant_management.
   ///
   /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
+  /// **'Manage your restaurant easily'**
+  String get restaurant_management;
 
-  /// No description provided for @password.
+  /// No description provided for @login.
   ///
   /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
+  /// **'Login'**
+  String get login;
 
-  /// No description provided for @forgotPassword.
+  /// No description provided for @time.
   ///
   /// In en, this message translates to:
-  /// **'Forgot Password?'**
-  String get forgotPassword;
+  /// **'Time'**
+  String get time;
 
-  /// No description provided for @signIN.
+  /// No description provided for @day.
   ///
   /// In en, this message translates to:
-  /// **'SIGN IN'**
-  String get signIN;
+  /// **'Day'**
+  String get day;
 
-  /// No description provided for @or.
+  /// No description provided for @accountant.
   ///
   /// In en, this message translates to:
-  /// **'OR'**
-  String get or;
+  /// **'Accountant'**
+  String get accountant;
 
-  /// No description provided for @signInWithFacebook.
+  /// No description provided for @manager.
   ///
   /// In en, this message translates to:
-  /// **'Sign In with Facebook'**
-  String get signInWithFacebook;
+  /// **'Manager'**
+  String get manager;
 
-  /// No description provided for @signInWithGoogle.
+  /// No description provided for @system_managers.
   ///
   /// In en, this message translates to:
-  /// **'Sign In with Google'**
-  String get signInWithGoogle;
+  /// **'System Managers'**
+  String get system_managers;
 
-  /// No description provided for @signUp.
+  /// No description provided for @owner.
   ///
   /// In en, this message translates to:
-  /// **'Sign Up'**
-  String get signUp;
+  /// **'Owner'**
+  String get owner;
 
-  /// No description provided for @name.
+  /// No description provided for @stock.
   ///
   /// In en, this message translates to:
-  /// **'Name'**
-  String get name;
+  /// **'Stock'**
+  String get stock;
 
-  /// No description provided for @categories.
+  /// No description provided for @waiter.
   ///
   /// In en, this message translates to:
-  /// **'Categories'**
-  String get categories;
+  /// **'Waiter'**
+  String get waiter;
 
-  /// No description provided for @men.
+  /// No description provided for @kitchen.
   ///
   /// In en, this message translates to:
-  /// **'Men'**
-  String get men;
+  /// **'Kitchen'**
+  String get kitchen;
 
-  /// No description provided for @women.
+  /// No description provided for @change_language.
   ///
   /// In en, this message translates to:
-  /// **'Women'**
-  String get women;
+  /// **'Change Language'**
+  String get change_language;
 
-  /// No description provided for @devices.
+  /// No description provided for @choose_language.
   ///
   /// In en, this message translates to:
-  /// **'Devices'**
-  String get devices;
-
-  /// No description provided for @gadgets.
-  ///
-  /// In en, this message translates to:
-  /// **'Gadgets'**
-  String get gadgets;
-
-  /// No description provided for @gaming.
-  ///
-  /// In en, this message translates to:
-  /// **'Gaming'**
-  String get gaming;
-
-  /// No description provided for @bestSelling.
-  ///
-  /// In en, this message translates to:
-  /// **'Best Selling'**
-  String get bestSelling;
-
-  /// No description provided for @seeAll.
-  ///
-  /// In en, this message translates to:
-  /// **'See all'**
-  String get seeAll;
-
-  /// No description provided for @size.
-  ///
-  /// In en, this message translates to:
-  /// **'Size'**
-  String get size;
-
-  /// No description provided for @color.
-  ///
-  /// In en, this message translates to:
-  /// **'Color'**
-  String get color;
-
-  /// No description provided for @details.
-  ///
-  /// In en, this message translates to:
-  /// **'Details'**
-  String get details;
-
-  /// No description provided for @price.
-  ///
-  /// In en, this message translates to:
-  /// **'Price'**
-  String get price;
-
-  /// No description provided for @add.
-  ///
-  /// In en, this message translates to:
-  /// **'Add'**
-  String get add;
-
-  /// No description provided for @newW.
-  ///
-  /// In en, this message translates to:
-  /// **'New'**
-  String get newW;
-
-  /// No description provided for @total.
-  ///
-  /// In en, this message translates to:
-  /// **'Total'**
-  String get total;
-
-  /// No description provided for @checkout.
-  ///
-  /// In en, this message translates to:
-  /// **'Checkout'**
-  String get checkout;
-
-  /// No description provided for @next.
-  ///
-  /// In en, this message translates to:
-  /// **'NEXT'**
-  String get next;
-
-  /// No description provided for @back.
-  ///
-  /// In en, this message translates to:
-  /// **'BACK'**
-  String get back;
+  /// **'Choose suitable Language'**
+  String get choose_language;
 }
 
 class _AppLocalizationsDelegate

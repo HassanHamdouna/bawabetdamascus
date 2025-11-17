@@ -12,86 +12,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome => 'Welcome';
 
   @override
-  String get signInToContinue => 'Sign in to Continue';
+  String get title => 'Bawabet Damascus';
 
   @override
-  String get email => 'Email';
+  String get restaurant_management => 'Manage your restaurant easily';
 
   @override
-  String get password => 'Password';
+  String get login => 'Login';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get time => 'Time';
 
   @override
-  String get signIN => 'SIGN IN';
+  String get day => 'Day';
 
   @override
-  String get or => 'OR';
+  String get accountant => 'Accountant';
 
   @override
-  String get signInWithFacebook => 'Sign In with Facebook';
+  String get manager => 'Manager';
 
   @override
-  String get signInWithGoogle => 'Sign In with Google';
+  String get system_managers => 'System Managers';
 
   @override
-  String get signUp => 'Sign Up';
+  String get owner => 'Owner';
 
   @override
-  String get name => 'Name';
+  String get stock => 'Stock';
 
   @override
-  String get categories => 'Categories';
+  String get waiter => 'Waiter';
 
   @override
-  String get men => 'Men';
+  String get kitchen => 'Kitchen';
 
   @override
-  String get women => 'Women';
+  String get change_language => 'Change Language';
 
   @override
-  String get devices => 'Devices';
-
-  @override
-  String get gadgets => 'Gadgets';
-
-  @override
-  String get gaming => 'Gaming';
-
-  @override
-  String get bestSelling => 'Best Selling';
-
-  @override
-  String get seeAll => 'See all';
-
-  @override
-  String get size => 'Size';
-
-  @override
-  String get color => 'Color';
-
-  @override
-  String get details => 'Details';
-
-  @override
-  String get price => 'Price';
-
-  @override
-  String get add => 'Add';
-
-  @override
-  String get newW => 'New';
-
-  @override
-  String get total => 'Total';
-
-  @override
-  String get checkout => 'Checkout';
-
-  @override
-  String get next => 'NEXT';
-
-  @override
-  String get back => 'BACK';
+  String get choose_language => 'Choose suitable Language';
 }

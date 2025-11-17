@@ -9,89 +9,47 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get welcome => 'Weladcome';
+  String get welcome => 'Bienvenue';
 
   @override
-  String get signInToContinue => 'Sign in to das Continue';
+  String get title => 'Bawabet Damascus';
 
   @override
-  String get email => 'Emasadil';
+  String get restaurant_management => 'Gérez votre restaurant facilement';
 
   @override
-  String get password => 'Passsadword';
+  String get login => 'Connexion';
 
   @override
-  String get forgotPassword => 'Forgot sdPassword?';
+  String get time => 'Heure';
 
   @override
-  String get signIN => 'SIGN IN';
+  String get day => 'Jour';
 
   @override
-  String get or => 'OR';
+  String get accountant => 'Comptable';
 
   @override
-  String get signInWithFacebook => 'Sign In with Facebook';
+  String get manager => 'Gestionnaire';
 
   @override
-  String get signInWithGoogle => 'Sign In with Google';
+  String get system_managers => 'Administrateurs système';
 
   @override
-  String get signUp => 'Sign Up';
+  String get owner => 'Propriétaire';
 
   @override
-  String get name => 'Name';
+  String get stock => 'Stock';
 
   @override
-  String get categories => 'Categories';
+  String get waiter => 'Serveur';
 
   @override
-  String get men => 'Men';
+  String get kitchen => 'Cuisine';
 
   @override
-  String get women => 'Women';
+  String get change_language => 'Changer de langue';
 
   @override
-  String get devices => 'Devices';
-
-  @override
-  String get gadgets => 'Gadgets';
-
-  @override
-  String get gaming => 'Gaming';
-
-  @override
-  String get bestSelling => 'Best Selling';
-
-  @override
-  String get seeAll => 'See all';
-
-  @override
-  String get size => 'Size';
-
-  @override
-  String get color => 'Color';
-
-  @override
-  String get details => 'Details';
-
-  @override
-  String get price => 'Price';
-
-  @override
-  String get add => 'Add';
-
-  @override
-  String get newW => 'New';
-
-  @override
-  String get total => 'Total';
-
-  @override
-  String get checkout => 'Checkout';
-
-  @override
-  String get next => 'NEXT';
-
-  @override
-  String get back => 'BACK';
+  String get choose_language => 'Choisissez la langue';
 }

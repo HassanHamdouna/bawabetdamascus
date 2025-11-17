@@ -1,3 +1,6 @@
+import 'package:bawabetdamascus/presentation/screens/system_manager/add_edit_user_screen.dart';
+import 'package:bawabetdamascus/presentation/screens/system_manager/user_management_screen.dart';
+import 'package:bawabetdamascus/presentation/screens/waiter/waiter_tables_list_screen.dart';
 import 'package:flutter/material.dart';
 
 // 📦 استيراد الشاشات
@@ -5,7 +8,9 @@ import 'package:bawabetdamascus/presentation/screens/launch/launch_screen.dart';
 import 'package:bawabetdamascus/presentation/screens/auth/login_screen.dart';
 // import 'package:bawabetdamascus/presentation/screens/auth/register_screen.dart';
 // import 'package:bawabetdamascus/presentation/screens/system_manager/dashboard_screen.dart';
-// import 'package:bawabetdamascus/presentation/screens/waiter/tables_screen.dart';
+import 'package:bawabetdamascus/presentation/screens/waiter/waiter_tables.dart';
+import 'package:bawabetdamascus/presentation/screens/waiter/cart_screen.dart';
+import 'package:bawabetdamascus/presentation/screens/system_manager/user_management_screen.dart';
 // import 'package:bawabetdamascus/presentation/screens/kitchen/kitchen_orders_screen.dart';
 // import 'package:bawabetdamascus/presentation/screens/accountant/cashier_screen.dart';
 // import 'package:bawabetdamascus/presentation/screens/manager/settings_screen.dart';
@@ -25,6 +30,10 @@ class AppRoutes {
   static const String register = '/register_screen';
   static const String managerDashboard = '/manager_dashboard';
   static const String waiterTables = '/waiter_tables';
+  static const String cartScreen = '/cart_screen';
+  static const String waiterTablesListScreen = '/waiter_tables_list_screen';
+  static const String userManagementScreen = '/user_management_screen';
+  static const String addEditUserScreen = '/add_user_screen';
   static const String kitchenOrders = '/kitchen_orders';
   static const String cashier = '/cashier_screen';
   static const String settings = '/settings_screen';
@@ -41,7 +50,11 @@ class AppRoutes {
       login: (context) => const LoginScreen(),
       // register: (context) => const RegisterScreen(),
       // managerDashboard: (context) => const DashboardScreen(),
-      // waiterTables: (context) => const TablesScreen(),
+      waiterTables: (context) => const WaiterTables(),
+      cartScreen: (context) => const CartScreen(),
+      waiterTablesListScreen: (context) => const WaiterTablesListScreen(waiterId: "حسن المصري",),
+      userManagementScreen: (context) => const UserManagementScreen(),
+      addEditUserScreen: (context) => const AddEditUserScreen(),
       // kitchenOrders: (context) => const KitchenOrdersScreen(),
       // cashier: (context) => const CashierScreen(),
       // settings: (context) => const SettingsScreen(),

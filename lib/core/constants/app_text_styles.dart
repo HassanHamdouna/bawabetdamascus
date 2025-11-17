@@ -2,73 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_colors.dart';
 
-/// 🖋️ يحتوي على جميع أنماط النصوص الموحدة لتطبيق بوابة دمشق.
-/// الهدف: توحيد شكل النصوص في جميع الصفحات، بحيث يسهل تعديلها لاحقًا.
-
 class AppTextStyles {
-  // 📌 عناوين كبيرة (مثل اسم القسم أو الشاشة)
   static TextStyle headlineLarge = TextStyle(
     fontSize: 26.sp,
     fontWeight: FontWeight.bold,
-    // color: AppColors.primaryText,
+    color: AppColors.textDark,
     height: 1.3,
   );
 
-  // 📌 عناوين متوسطة
   static TextStyle headlineMedium = TextStyle(
     fontSize: 22.sp,
     fontWeight: FontWeight.w600,
-    // color: AppColors.primaryText,
+    color: AppColors.textDark,
   );
 
-  // 📌 عناوين صغيرة
   static TextStyle headlineSmall = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w600,
-    // color: AppColors.primaryText,
+    color: AppColors.textDark,
   );
 
-  // 📋 نصوص عادية (مثل وصف المنتج أو المحتوى)
   static TextStyle bodyLarge = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w500,
-    // color: AppColors.secondaryText,
+    color: AppColors.textDark,
   );
 
   static TextStyle bodyMedium = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.normal,
-    // color: AppColors.secondaryText,
+    color: AppColors.textDark,
   );
 
   static TextStyle bodySmall = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w400,
-    // color: AppColors.secondaryText,
+    color: AppColors.textDark,
+  );
+  static TextStyle bodySmall2 = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textDark,
   );
 
-  // 💬 نصوص مميزة (مثل السعر أو العروض)
   static TextStyle highlight = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.primary,
   );
 
-  // ⚙️ نصوص داخل الأزرار
   static TextStyle buttonText = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w600,
     color: Colors.white,
   );
 
-  // 🗒️ نصوص خافتة (ملاحظات أو توجيهات)
   static TextStyle hint = TextStyle(
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
-    // color: AppColors.hintText,
   );
 
-  // 💡 للغة العربية يمكن لاحقًا تغيير الخط هنا
   static void setArabicFontFamily() {
     headlineLarge = headlineLarge.copyWith(fontFamily: 'Cairo');
     headlineMedium = headlineMedium.copyWith(fontFamily: 'Cairo');

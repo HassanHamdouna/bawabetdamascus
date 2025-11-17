@@ -1,18 +1,15 @@
 import 'package:bawabetdamascus/core/utils/shared_pref_controller.dart';
+import 'package:bawabetdamascus/gen_l10n/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-
-import 'core/localization/l10n/app_localization.dart';
 import 'core/theme/light_theme.dart';
 import 'core/theme/dark_theme.dart';
-
 import 'domain/providers/theme_provider.dart';
 import 'domain/providers/language_provider.dart';
 import 'domain/providers/settings_provider.dart';
-
 import 'routes/app_routes.dart';
 
 void main() async {
@@ -20,7 +17,7 @@ void main() async {
   await SharedPrefController.instance.initPref();
   runApp(const BawabetDamascusApp());
 }
-//test2
+
 class BawabetDamascusApp extends StatelessWidget {
   const BawabetDamascusApp({super.key});
 
@@ -44,11 +41,7 @@ class BawabetDamascusApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: themeProvider.isDark ? getDarkTheme() : getLightTheme(),
             locale: langProvider.currentLocale,
-            supportedLocales: const [
-              Locale('en'),
-              Locale('ar'),
-              Locale('fr'),
-            ],
+            supportedLocales: AppLocalizations.supportedLocales,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

@@ -9,89 +9,47 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get welcome => 'اهلا وسهلا';
+  String get welcome => 'مرحبا بك';
 
   @override
-  String get signInToContinue => 'اكمل تسجيل الدخول';
+  String get title => 'مطعم بوابة دمشق';
 
   @override
-  String get email => 'البريد';
+  String get restaurant_management => 'ادارة مطعم بكل سهولة';
 
   @override
-  String get password => 'كلمة المرور';
+  String get login => 'تسجيل الدخول';
 
   @override
-  String get forgotPassword => 'نسيت كلمة المرور؟';
+  String get time => 'الوقت';
 
   @override
-  String get signIN => 'تسجيل الدخول';
+  String get day => 'اليوم';
 
   @override
-  String get or => 'أو';
+  String get accountant => 'محاسب';
 
   @override
-  String get signInWithFacebook => 'تسجيل الدخول باستخدام فيسبوك';
+  String get manager => 'مدير';
 
   @override
-  String get signInWithGoogle => 'تسجيل الدخول باستخدام جوجل';
+  String get system_managers => 'مدراء النظام';
 
   @override
-  String get signUp => 'التسجيل';
+  String get owner => 'المالك';
 
   @override
-  String get name => 'الاسم';
+  String get stock => 'المخزون';
 
   @override
-  String get categories => 'الفئات';
+  String get waiter => 'النادل';
 
   @override
-  String get men => 'رجال';
+  String get kitchen => 'المطبخ';
 
   @override
-  String get women => 'نساء';
+  String get change_language => 'تغيير اللغة';
 
   @override
-  String get devices => 'أجهزة';
-
-  @override
-  String get gadgets => 'أدوات';
-
-  @override
-  String get gaming => 'ألعاب';
-
-  @override
-  String get bestSelling => 'الأكثر مبيعًا';
-
-  @override
-  String get seeAll => 'عرض الكل';
-
-  @override
-  String get size => 'الحجم';
-
-  @override
-  String get color => 'اللون';
-
-  @override
-  String get details => 'تفاصيل';
-
-  @override
-  String get price => 'السعر';
-
-  @override
-  String get add => 'إضافة';
-
-  @override
-  String get newW => 'جديد';
-
-  @override
-  String get total => 'الإجمالي';
-
-  @override
-  String get checkout => 'الدفع';
-
-  @override
-  String get next => 'التالي';
-
-  @override
-  String get back => 'العودة';
+  String get choose_language => 'اختر اللغة المناسبة';
 }
