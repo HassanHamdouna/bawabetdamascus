@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "134289986040",
+    "project_id": "bawabetdamascus",
+    "storage_bucket": "bawabetdamascus.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134289986040:android:275413b9e26f662045860d",
+        "android_client_info": {
+          "package_name": "com.bawabetdamascus.bawabetdamascus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWOMuLjxRubLYvrTr7e3ki1JfXz-_VWVY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,11 +1,13 @@
 import 'dart:io';
+import 'package:bawabetdamascus/core/utils/image%D9%80manager.dart';
 import 'package:flutter/material.dart';
-
-enum UserRole { admin, waiter, accountant, owner, stock, kitchen }
-enum WorkPlace { restaurant, kitchen, storage, management }
+import 'package:image_picker/image_picker.dart';
+import 'package:bawabetdamascus/data/controllers/user_controller.dart';
+import 'package:bawabetdamascus/data/models/user_model.dart';
+import 'package:bawabetdamascus/gen_l10n/app_localization.dart';
 
 class AddEditUserScreen extends StatefulWidget {
-  final Map<String, dynamic>? user; // موجود إذا تعديل
+  final UserModel? user;
 
   const AddEditUserScreen({super.key, this.user});
 
@@ -14,14 +16,16 @@ class AddEditUserScreen extends StatefulWidget {
 }
 
 class _AddEditUserScreenState extends State<AddEditUserScreen> {
-  // ---------- Controllers ----------
+  final picker = ImagePicker();
+  final userController = UserController();
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController nationalityController = TextEditingController();
-  final TextEditingController birthDateController = TextEditingController();
-  final TextEditingController salaryController = TextEditingController();
-  final TextEditingController notesController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController placeController = TextEditingController();
+  final TextEditingController nationalityController = TextEditingController();
+  final TextEditingController birthdateController = TextEditingController();
+  final TextEditingController salaryController = TextEditingController();
   final TextEditingController contractTypeController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
@@ -32,177 +36,191 @@ class _AddEditUserScreenState extends State<AddEditUserScreen> {
   final TextEditingController suppliesReceivedController = TextEditingController();
   final TextEditingController suppliesDeliveredController = TextEditingController();
   final TextEditingController suppliesDateController = TextEditingController();
+  final TextEditingController notesController = TextEditingController();
 
-  // ---------- Dropdowns ----------
-  UserRole? selectedRole;
-  WorkPlace? selectedPlace;
   bool usesApp = false;
   String? imagePath;
+
+  // Roles
+  final List<String> allRoles = [
+    'admin', 'owner', 'manager','systemManagers', 'waiter', 'accountant', 'kitchen', 'stock', 'delivery', 'employee'
+  ];
+  final Set<String> selectedRoles = {};
 
   @override
   void initState() {
     super.initState();
     if (widget.user != null) {
       final u = widget.user!;
-      nameController.text = u['name'] ?? '';
-      phoneController.text = u['phone'] ?? '';
-      nationalityController.text = u['nationality'] ?? '';
-      birthDateController.text = u['birthdate'] ?? '';
-      salaryController.text = u['salary'] ?? '';
-      notesController.text = u['notes'] ?? '';
-      passwordController.text = u['password'] ?? '';
-      contractTypeController.text = u['contractType'] ?? '';
-      startDateController.text = u['startDate'] ?? '';
-      endDateController.text = u['endDate'] ?? '';
-      hoursController.text = u['hours'] ?? '';
-      deductionsController.text = u['deductions'] ?? '';
-      lastDeductionController.text = u['lastDeduction'] ?? '';
-      deductionReasonController.text = u['deductionReason'] ?? '';
-      suppliesReceivedController.text = u['suppliesReceived'] ?? '';
-      suppliesDeliveredController.text = u['suppliesDelivered'] ?? '';
-      suppliesDateController.text = u['suppliesDate'] ?? '';
-      selectedRole = u['role'];
-      selectedPlace = u['place'];
-      usesApp = u['usesApp'] ?? false;
-      imagePath = u['image'];
+      nameController.text = u.name;
+      phoneController.text = u.phone;
+      passwordController.text = u.password;
+      placeController.text = u.place;
+      nationalityController.text = u.nationality;
+      birthdateController.text = u.birthdate;
+      salaryController.text = u.salary;
+      contractTypeController.text = u.contractType;
+      startDateController.text = u.startDate;
+      endDateController.text = u.endDate;
+      hoursController.text = u.hours;
+      deductionsController.text = u.deductions;
+      lastDeductionController.text = u.lastDeduction;
+      deductionReasonController.text = u.deductionReason;
+      suppliesReceivedController.text = u.suppliesReceived;
+      suppliesDeliveredController.text = u.suppliesDelivered;
+      suppliesDateController.text = u.suppliesDate;
+      notesController.text = u.notes;
+      usesApp = u.usesApp;
+      imagePath = u.image;
+      selectedRoles.addAll(u.roles ?? []);
     }
-  }
-
-  Widget buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-    );
-  }
-
-  Widget buildTextField(TextEditingController controller, String label,
-      {TextInputType inputType = TextInputType.text}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: TextField(
-        controller: controller,
-        keyboardType: inputType,
-        decoration: InputDecoration(
-          labelText: label,
-          border: const OutlineInputBorder(),
-        ),
-      ),
-    );
-  }
-
-  Future<void> pickImage() async {
-    // final picker = ImagePicker();
-    // final picked = await picker.pickImage(source: ImageSource.gallery);
-    // if (picked != null) {
-    //   setState(() => imagePath = picked.path);
-    // }
-  }
-
-  void saveUser() {
-    final data = {
-      "name": nameController.text,
-      "phone": phoneController.text,
-      "nationality": nationalityController.text,
-      "birthdate": birthDateController.text,
-      "salary": salaryController.text,
-      "notes": notesController.text,
-      "password": passwordController.text,
-      "contractType": contractTypeController.text,
-      "startDate": startDateController.text,
-      "endDate": endDateController.text,
-      "hours": hoursController.text,
-      "deductions": deductionsController.text,
-      "lastDeduction": lastDeductionController.text,
-      "deductionReason": deductionReasonController.text,
-      "suppliesReceived": suppliesReceivedController.text,
-      "suppliesDelivered": suppliesDeliveredController.text,
-      "suppliesDate": suppliesDateController.text,
-      "role": selectedRole,
-      "place": selectedPlace,
-      "usesApp": usesApp,
-      "image": imagePath,
-    };
-
-    // هنا تضيف كود حفظ البيانات في Firestore
-    print(data);
   }
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context)!;
+    final isEdit = widget.user != null;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.user != null ? "تعديل مستخدم" : "إضافة مستخدم"),
-      ),
+      appBar: AppBar(title: Text(isEdit ? lang.edit_user : lang.add_user)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildSectionTitle("البيانات الأساسية"),
             GestureDetector(
               onTap: pickImage,
-              child: Center(
-                child: CircleAvatar(
-                  radius: 45,
-                  backgroundImage: imagePath != null ? FileImage(File(imagePath!)) : null,
-                  child: imagePath == null ? const Icon(Icons.camera_alt, size: 40) : null,
-                ),
+              child: Container(
+                width: double.infinity,
+                height: 200,
+                color: Colors.grey.shade300,
+                child: imagePath != null
+                    ? (imagePath!.startsWith("http")
+                    ? Image.network(imagePath!, fit: BoxFit.cover)
+                    : Image.file(File(imagePath!), fit: BoxFit.cover))
+                    : const Icon(Icons.person, size: 100),
               ),
             ),
-            const SizedBox(height: 12),
-            buildTextField(nameController, "الاسم الكامل"),
-            buildTextField(phoneController, "رقم الهاتف"),
-            buildTextField(nationalityController, "الجنسية"),
-            buildTextField(birthDateController, "تاريخ الميلاد"),
+            const SizedBox(height: 20),
+            buildTextField(lang.name, nameController),
+            buildTextField(lang.phone, phoneController),
+            buildTextField(lang.password, passwordController),
+            buildTextField(lang.place, placeController),
+            buildTextField("Nationality", nationalityController),
+            buildTextField("Birthdate", birthdateController),
+            buildTextField("Salary", salaryController),
+            buildTextField("Contract Type", contractTypeController),
+            buildTextField("Start Date", startDateController),
+            buildTextField("End Date", endDateController),
+            buildTextField("Hours", hoursController),
+            buildTextField("Deductions", deductionsController),
+            buildTextField("Last Deduction", lastDeductionController),
+            buildTextField("Deduction Reason", deductionReasonController),
+            buildTextField("Supplies Received", suppliesReceivedController),
+            buildTextField("Supplies Delivered", suppliesDeliveredController),
+            buildTextField("Supplies Date", suppliesDateController),
+            buildTextField("Notes", notesController),
+            const SizedBox(height: 20),
 
-            buildSectionTitle("بيانات العمل"),
-            buildTextField(salaryController, "الراتب", inputType: TextInputType.number),
-            buildTextField(contractTypeController, "نوع العقد"),
-            buildTextField(startDateController, "بداية الخدمة"),
-            buildTextField(endDateController, "نهاية الخدمة"),
-            buildTextField(hoursController, "الساعات"),
-            DropdownButtonFormField<UserRole>(
-              value: selectedRole,
-              decoration: const InputDecoration(labelText: "الدور في النظام", border: OutlineInputBorder()),
-              items: UserRole.values.map((r) => DropdownMenuItem(value: r, child: Text(r.name))).toList(),
-              onChanged: (v) => setState(() => selectedRole = v),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(lang.role, style: const TextStyle(fontWeight: FontWeight.bold)),
             ),
-            DropdownButtonFormField<WorkPlace>(
-              value: selectedPlace,
-              decoration: const InputDecoration(labelText: "مكان العمل", border: OutlineInputBorder()),
-              items: WorkPlace.values.map((p) => DropdownMenuItem(value: p, child: Text(p.name))).toList(),
-              onChanged: (v) => setState(() => selectedPlace = v),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 10,
+              children: allRoles.map((role) {
+                final isSelected = selectedRoles.contains(role);
+                return FilterChip(
+                  label: Text(role),
+                  selected: isSelected,
+                  onSelected: (val) {
+                    setState(() {
+                      if (val) {
+                        selectedRoles.add(role);
+                      } else {
+                        selectedRoles.remove(role);
+                      }
+                    });
+                  },
+                );
+              }).toList(),
             ),
 
-            buildSectionTitle("الخصومات والسحوبات"),
-            buildTextField(deductionsController, "مجموع السحوبات"),
-            buildTextField(lastDeductionController, "آخر خصم"),
-            buildTextField(deductionReasonController, "سبب الخصم"),
-
-            buildSectionTitle("المستلزمات"),
-            buildTextField(suppliesReceivedController, "استلم"),
-            buildTextField(suppliesDeliveredController, "تسليم"),
-            buildTextField(suppliesDateController, "تاريخ"),
-
-            buildSectionTitle("إعدادات النظام"),
-            buildTextField(passwordController, "كلمة المرور"),
+            const SizedBox(height: 20),
             SwitchListTile(
-              title: const Text("هل يستخدم التطبيق؟"),
+              title: Text(lang.uses_app),
               value: usesApp,
-              onChanged: (v) => setState(() => usesApp = v),
+              onChanged: (val) => setState(() => usesApp = val),
             ),
-
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: saveUser,
-                child: Text(widget.user != null ? "حفظ التعديلات" : "إضافة مستخدم"),
+                child: Text(isEdit ? lang.save_changes : lang.add_user),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget buildTextField(String label, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
+      ),
+    );
+  }
+
+  Future<void> pickImage() async {
+    final XFile? picked =
+    await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    if (picked != null) setState(() => imagePath = picked.path);
+  }
+
+  Future<void> saveUser() async {
+    String? uploadedUrl = imagePath;
+    if (uploadedUrl != null && !uploadedUrl.startsWith("http")) {
+      uploadedUrl = await ImageManager.uploadImage(File(uploadedUrl));
+    }
+
+    final user = UserModel(
+      id: widget.user?.id,
+      name: nameController.text.trim(),
+      phone: phoneController.text.trim(),
+      password: passwordController.text.trim(),
+      place: placeController.text.trim(),
+      usesApp: usesApp,
+      image: uploadedUrl,
+      roles: selectedRoles.toList(),
+
+      // جميع الحقول المطلوبة تم تعبئتها هنا
+      nationality: nationalityController.text.trim(),
+      birthdate: birthdateController.text.trim(),
+      salary: salaryController.text.trim(),
+      contractType: contractTypeController.text.trim(),
+      startDate: startDateController.text.trim(),
+      endDate: endDateController.text.trim(),
+      hours: hoursController.text.trim(),
+      deductions: deductionsController.text.trim(),
+      lastDeduction: lastDeductionController.text.trim(),
+      deductionReason: deductionReasonController.text.trim(),
+      suppliesReceived: suppliesReceivedController.text.trim(),
+      suppliesDelivered: suppliesDeliveredController.text.trim(),
+      suppliesDate: suppliesDateController.text.trim(),
+      notes: notesController.text.trim(),
+    );
+
+    if (widget.user == null) {
+      await userController.create(user);
+    } else {
+      await userController.update(user);
+    }
+
+    Navigator.pop(context);
   }
 }

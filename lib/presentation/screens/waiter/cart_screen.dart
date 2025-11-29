@@ -1,8 +1,8 @@
 import 'package:bawabetdamascus/core/constants/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../widgets/app_text_field.dart';
-import '../../widgets/custom_appbar.dart';
+import '../../widgets/auth/app_text_field.dart';
+import '../../widgets/auth/custom_appbar.dart';
 
 enum OrderType { table, takeaway, delivery }
 

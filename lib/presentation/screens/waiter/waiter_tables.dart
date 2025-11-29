@@ -1,13 +1,13 @@
 import 'package:bawabetdamascus/core/constants/app_colors.dart';
 import 'package:bawabetdamascus/core/constants/app_text_styles.dart';
 import 'package:bawabetdamascus/gen_l10n/app_localization.dart';
-import 'package:bawabetdamascus/presentation/widgets/waiter_app_bar.dart';
+import 'package:bawabetdamascus/presentation/widgets/waiter/waiter_app_bar.dart';
 import 'package:bawabetdamascus/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../widgets/category_item.dart';
-import '../../widgets/meal_item.dart';
+import '../../widgets/waiter/category_item.dart';
+import '../../widgets/waiter/meal_item.dart';
 
 enum OrderType { table, takeaway, delivery }
 

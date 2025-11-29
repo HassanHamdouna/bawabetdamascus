@@ -1,17 +1,18 @@
 import 'package:bawabetdamascus/core/constants/app_colors.dart';
 import 'package:bawabetdamascus/core/constants/app_text_styles.dart';
 import 'package:bawabetdamascus/core/utils/snackbar_helper.dart';
+import 'package:bawabetdamascus/data/controllers/user_controller.dart';
 import 'package:bawabetdamascus/domain/providers/theme_provider.dart';
-import 'package:bawabetdamascus/domain/providers/language_provider.dart';
 import 'package:bawabetdamascus/gen_l10n/app_localization.dart';
-import 'package:bawabetdamascus/presentation/widgets/app_text_field.dart';
-import 'package:bawabetdamascus/presentation/widgets/custom_appbar.dart';
-import 'package:bawabetdamascus/presentation/widgets/language_bottom_sheet.dart';
-import 'package:bawabetdamascus/presentation/widgets/role_card.dart';
+import 'package:bawabetdamascus/presentation/widgets/auth/app_text_field.dart';
+import 'package:bawabetdamascus/presentation/widgets/auth/custom_appbar.dart';
+import 'package:bawabetdamascus/presentation/widgets/auth/language_bottom_sheet.dart';
+import 'package:bawabetdamascus/presentation/widgets/auth/role_card.dart';
 import 'package:bawabetdamascus/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,33 +23,72 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController _passwordTextController;
+  late TextEditingController _passwordController;
+  final UserController userController = UserController();
+
   bool _obscure = true;
   bool _showRoles = false;
-  String _enteredPassword = '';
-
-  final Map<String, List<String>> passwordRoles = {
-    '1': ['accountant', 'manager', 'system_managers', 'owner', 'stock', 'waiter', 'kitchen'],
-    'manager123': ['manager', 'stock', 'waiter', 'kitchen'],
-    'accountant123': ['accountant'],
-    'waiter123': ['waiter'],
-    'kitchen123': ['kitchen'],
-  };
+  String? _enteredPassword;
+  List<String> _userRoles = [];
+  String? _userName; // اسم المستخدم بعد تسجيل الدخول
 
   @override
   void initState() {
     super.initState();
-    _passwordTextController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _passwordTextController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
+  void performLogin() async {
+    final password = _passwordController.text.trim();
+    ScaffoldMessenger.of(context).clearSnackBars();
+
+    if (password.isEmpty) {
+      SnackBarHelper.showError(context, 'Please enter password!');
+      return;
+    }
+
+    try {
+      final usersSnapshot = await userController.read().first;
+      final user = usersSnapshot.firstWhere(
+            (u) => u.password == password,
+      );
+
+      if (user == null) {
+        SnackBarHelper.showError(context, 'Invalid password!');
+        return;
+      }
+
+      setState(() {
+        _enteredPassword = password;
+        _userRoles = user.roles ?? [];
+        _userName = user.name; // حفظ اسم المستخدم
+        _showRoles = true;
+      });
+
+      _passwordController.clear();
+    } catch (e) {
+      SnackBarHelper.showError(context, 'Error fetching users!');
+    }
+  }
+
   bool hasRole(String role) {
-    return passwordRoles[_enteredPassword]?.contains(role) ?? false;
+    return _userRoles.contains(role);
+  }
+
+  String getCurrentTime() {
+    final now = DateTime.now();
+    return DateFormat('HH:mm').format(now);
+  }
+
+  String getCurrentDate() {
+    final now = DateTime.now();
+    return DateFormat('dd/MM/yyyy').format(now);
   }
 
   @override
@@ -56,14 +96,17 @@ class _LoginScreenState extends State<LoginScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final lang = AppLocalizations.of(context)!;
 
+
     return Scaffold(
       appBar: CustomAppBar(
         leading: IconButton(
-          icon: Icon(themeProvider.isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
-              color: AppColors.grey, size: 35),
+          icon: Icon(
+            themeProvider.isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
+            color: AppColors.grey,
+            size: 35,
+          ),
           onPressed: () => themeProvider.toggleTheme(),
-        ),
-        actions: [
+        ),        actions: [
           IconButton(
             onPressed: () => showLanguageBottomSheet(context),
             icon: const Icon(Icons.language, color: AppColors.grey, size: 35),
@@ -78,32 +121,35 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // بطاقة الترحيب مع الوقت والتاريخ الحالي
             Card(
               color: AppColors.darkCard,
               margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(lang.welcome, style: AppTextStyles.headlineMedium),
-                        Text(lang.restaurant_management, style: AppTextStyles.bodySmall),
+                        Text(
+                           lang.welcome,
+                          style: AppTextStyles.headlineMedium,
+                        ),
+                        Text(
+                          _userName != null ? '$_userName' : "",
+                          style: AppTextStyles.bodySmall,
+                        ),
                         SizedBox(height: 10.sp),
                         Row(
                           children: [
                             const Icon(Icons.timer_outlined, color: AppColors.accent, size: 20.0),
-                            Text(lang.time, style: AppTextStyles.bodySmall),
                             SizedBox(width: 2.sp),
-                            Text("22:51 ", style: AppTextStyles.bodySmall),
+                            Text(getCurrentTime(), style: AppTextStyles.bodySmall),
                             SizedBox(width: 10.sp),
                             const Icon(Icons.date_range, color: AppColors.accent, size: 20.0),
-                            Text(lang.day, style: AppTextStyles.bodySmall),
                             SizedBox(width: 2.sp),
-                            Text("11:01:2025 ", style: AppTextStyles.bodySmall),
+                            Text(getCurrentDate(), style: AppTextStyles.bodySmall),
                           ],
                         ),
                       ],
@@ -120,59 +166,67 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 20),
+
+            // حقل كلمة المرور
             AppTextField(
               hint: lang.login,
               prefixIcon: Icons.lock,
               obscureText: _obscure,
               keyboardType: TextInputType.text,
-              controller: _passwordTextController,
+              controller: _passwordController,
               suffixIcon: IconButton(
                 onPressed: () => setState(() => _obscure = !_obscure),
-                icon: Icon(_obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                    size: 30, color: AppColors.grey),
+                icon: Icon(
+                  _obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  size: 30,
+                  color: AppColors.grey,
+                ),
               ),
             ),
             const SizedBox(height: 20),
+
+            // زر تسجيل الدخول
             ElevatedButton(
               onPressed: performLogin,
               style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 40)),
-              child: Text(lang.login, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14.sp)),
+              child: Text(
+                lang.login,
+                style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14.sp),
+              ),
             ),
             const SizedBox(height: 20),
+
+            // عرض الأدوار المتاحة بعد تسجيل الدخول
             if (_showRoles)
               Expanded(
                 child: ListView(
                   children: [
-                    Row(
-                      children: [
-                        if (hasRole('accountant'))
-                          RoleCard(title: lang.accountant, icon: Icons.account_balance, onTap: () {}),
-                        if (hasRole('manager'))
-                          RoleCard(title: lang.manager, icon: Icons.manage_accounts_rounded, onTap: () {}),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        if (hasRole('system_managers'))
-                          RoleCard(title: lang.system_managers, icon: Icons.system_security_update_good, onTap: () {
-                            Navigator.pushReplacementNamed(context, AppRoutes.userManagementScreen);
-                          }),
-                        if (hasRole('owner'))
-                          RoleCard(title: lang.owner, icon: Icons.supervised_user_circle, onTap: () {}),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        if (hasRole('stock'))
-                          RoleCard(title: lang.stock, icon: Icons.stadium_rounded, onTap: () {}),
-                        if (hasRole('waiter'))
-                          RoleCard(title: lang.waiter, icon: Icons.waving_hand, onTap: () {
-                            Navigator.pushReplacementNamed(context, AppRoutes.waiterTables);
-                          }),
-                        if (hasRole('kitchen'))
-                          RoleCard(title: lang.kitchen, icon: Icons.soup_kitchen_sharp, onTap: () {}),
-                      ],
-                    ),
+                    if (hasRole('accountant'))
+                      RoleCard(title: lang.accountant, icon: Icons.account_balance, onTap: () {}),
+                    if (hasRole('manager'))
+                      RoleCard(title: lang.manager, icon: Icons.manage_accounts_rounded, onTap: () {}),
+                    if (hasRole('systemManagers'))
+                      RoleCard(
+                        title: lang.system_managers,
+                        icon: Icons.system_security_update_good,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(context, AppRoutes.systemManagementScreen);
+                        },
+                      ),
+                    if (hasRole('owner'))
+                      RoleCard(title: lang.owner, icon: Icons.supervised_user_circle, onTap: () {}),
+                    if (hasRole('stock'))
+                      RoleCard(title: lang.stock, icon: Icons.stadium_rounded, onTap: () {}),
+                    if (hasRole('waiter'))
+                      RoleCard(
+                        title: lang.waiter,
+                        icon: Icons.waving_hand,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(context, AppRoutes.waiterTables);
+                        },
+                      ),
+                    if (hasRole('kitchen'))
+                      RoleCard(title: lang.kitchen, icon: Icons.soup_kitchen_sharp, onTap: () {}),
                   ],
                 ),
               ),
@@ -180,29 +234,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  void performLogin() {
-    final password = _passwordTextController.text.trim();
-    ScaffoldMessenger.of(context).clearSnackBars();
-
-    if (password.isEmpty) {
-      SnackBarHelper.showError(context, 'Please enter required data!');
-      return;
-    }
-
-    if (passwordRoles.containsKey(password)) {
-      setState(() {
-        _enteredPassword = password;
-        _showRoles = true;
-      });
-      _passwordTextController.clear();
-    } else {
-      setState(() {
-        _showRoles = false;
-      });
-      _passwordTextController.clear();
-      SnackBarHelper.showError(context, 'Invalid password!');
-    }
   }
 }

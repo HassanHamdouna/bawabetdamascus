@@ -1,5 +1,8 @@
+import 'package:bawabetdamascus/config/cloudinary_config.dart';
+import 'package:bawabetdamascus/config/firebase_options.dart';
 import 'package:bawabetdamascus/core/utils/shared_pref_controller.dart';
 import 'package:bawabetdamascus/gen_l10n/app_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +18,10 @@ import 'routes/app_routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefController.instance.initPref();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  CloudinaryConfig.initialize();
   runApp(const BawabetDamascusApp());
 }
 
